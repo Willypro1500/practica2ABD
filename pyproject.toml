@@ -1,0 +1,13 @@
+[project]
+name = "envivo-fase2"
+version = "0.1.0"
+description = "EnVivo · fase 2 · consultas e informes"
+requires-python = ">=3.12"
+dependencies = [
+    "pymongo>=4.10",
+]
+
+[dependency-groups]
+dev = [
+    "pytest>=8.3",
+]
