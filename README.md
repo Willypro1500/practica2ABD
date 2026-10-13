@@ -10,8 +10,11 @@ campus virtual. Esto es solo el código.
 
 ## Cómo empezar
 
-1. **Haz un fork** de este repositorio con el botón *Fork* de GitHub. Uno por
-   grupo: trabajad los dos sobre el mismo fork.
+1. **Crea tu repositorio a partir de esta plantilla** con el botón
+   *Use this template → Create a new repository*, y márcalo como **Private**.
+   No hagas un *fork*: un fork de un repositorio público es público, y tu
+   código quedaría a la vista de todos. Uno por grupo: quien lo crea añade a
+   su compañero en *Settings → Collaborators*.
 2. Clónalo en tu máquina:
 
    ```bash
@@ -145,7 +148,7 @@ Si el notebook devuelve resultados vacíos, casi siempre es una de las dos.
 
 ## La entrega
 
-El fork es para trabajar. La entrega es la que dice el enunciado: un **ZIP**
+Tu repositorio es para trabajar. La entrega es la que dice el enunciado: un **ZIP**
 con la carpeta del proyecto —`consultas.py`, el notebook con las ocho
 consultas ejecutadas a través del ODM de la práctica 1, y el código de esa
 práctica necesario para volver a ejecutarlo— nombrado
