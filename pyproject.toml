@@ -5,6 +5,10 @@ description = "EnVivo · fase 2 · consultas e informes"
 requires-python = ">=3.12"
 dependencies = [
     "pymongo>=4.10",
+    "geopy>=2.4",
+    "geojson>=3.1",
+    "pyyaml>=6.0",
+    "ipykernel>=6.29",
 ]
 
 [dependency-groups]

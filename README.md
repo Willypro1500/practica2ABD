@@ -130,6 +130,19 @@ formulación que produzca la salida pedida puntúa igual.
 Las pruebas trabajan sobre la base `envivo_test`, que recrean en cada
 ejecución, así que **no tocan tus datos** de `envivo`.
 
+## El notebook, a través del ODM de la práctica 1
+
+Copia aquí tu `ODM.py` y tu `models.yml` de la práctica 1. El `pyproject.toml`
+ya trae sus dependencias y las del notebook. Dos cosas para que el ODM vea los
+datos de referencia:
+
+- Inicialízalo con `initApp(db_name="envivo")`.
+- Los modelos del `models.yml` se llaman **igual que las colecciones**:
+  `recinto`, `artista`, `evento` y `asistente`, en minúscula. Los `$lookup` de
+  las consultas buscan las colecciones por esos nombres.
+
+Si el notebook devuelve resultados vacíos, casi siempre es una de las dos.
+
 ## La entrega
 
 El fork es para trabajar. La entrega es la que dice el enunciado: un **ZIP**
