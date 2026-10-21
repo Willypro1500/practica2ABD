@@ -149,10 +149,9 @@ Si el notebook devuelve resultados vacíos, casi siempre es una de las dos.
 ## La entrega
 
 Tu repositorio es para trabajar. La entrega es la que dice el enunciado: un **ZIP**
-con la carpeta del proyecto —`consultas.py`, el notebook con las ocho
-consultas ejecutadas a través del ODM de la práctica 1, y el código de esa
-práctica necesario para volver a ejecutarlo— nombrado
-`P2_G<grupo>_Nombre_Apellido-Nombre_Apellido.zip`.
+con la carpeta del proyecto y estos cuatro ficheros —`consultas.py`, el
+notebook con las ocho consultas ejecutadas a través del ODM, `ODM.py` y
+`models.yml`— nombrado `P2_G<grupo>_Nombre_Apellido-Nombre_Apellido.zip`.
 
 ## Si algo no arranca
 
