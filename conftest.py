@@ -14,7 +14,7 @@ from pymongo import MongoClient, GEOSPHERE
 URI = os.environ.get("MONGO_URI", "mongodb://localhost:27017")
 BD = "envivo_test"
 COLECCIONES = ["recinto", "artista", "evento", "asistente"]
-
+"hola"
 
 
 def _localiza_datos():
