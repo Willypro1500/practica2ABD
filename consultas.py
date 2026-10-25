@@ -105,7 +105,38 @@ C2 = [
 # decimales y eventos (número de eventos de ese mes). Ordenado por mes.
 C3 = [
     # TODO
+    {
+        "$project": {
+            "mes": {"$substrCP": ["$fecha", 0, 7]},
+            "ingresos_evento": {
+                "$sum": {
+                    "$map": {
+                        "input": "$precios_por_zona",
+                        "as": "pz",
+                        "in": {"$multiply": ["$$pz.precio", "$$pz.vendidas"]},
+                    }
+                }
+            },
+        }
+    },
+    {
+        "$group": {
+            "_id": "$mes",
+            "ingresos": {"$sum": "$ingresos_evento"},
+            "eventos": {"$sum": 1},
+        }
+    },
+    {
+        "$project": {
+            "_id": 0,
+            "mes": "$_id",
+            "ingresos": {"$round": ["$ingresos", 2]},
+            "eventos": 1,
+        }
+    },
+    {"$sort": {"mes": 1}},
 ]
+
 
 # ── C4 · Los tres artistas más programados ──────────────────────────────────
 # Colección: evento
@@ -114,7 +145,26 @@ C3 = [
 # actuaciones descendente y, a igualdad, por artista.
 C4 = [
     # TODO
+    {"$unwind": "$artistas"},
+    {
+        "$group": {
+            "_id": "$artistas",
+            "actuaciones": {"$sum": 1},
+            "recintos_set": {"$addToSet": "$recinto"},
+        }
+    },
+    {
+        "$project": {
+            "_id": 0,
+            "artista": "$_id",
+            "actuaciones": 1,
+            "recintos": {"$size": "$recintos_set"},
+        }
+    },
+    {"$sort": {"actuaciones": -1, "artista": 1}},
+    {"$limit": 3},
 ]
+
 
 # ── C5 · Recintos a menos de 5 km de la Puerta del Sol ──────────────────────
 # Colección: recinto
@@ -123,6 +173,37 @@ C4 = [
 # decimales, y eventos (número de eventos de ese recinto).
 C5 = [
     # TODO
+    {
+        "$geoNear": {
+            "near": {
+                "type": "Point",
+                "coordinates": [-3.7038, 40.4168],
+            },
+            "distanceField": "distancia_metros",
+            "maxDistance": 5000,
+            "spherical": True,
+        }
+    },
+    {
+        "$lookup": {
+            "from": "evento",
+            "localField": "nombre",
+            "foreignField": "recinto",
+            "as": "eventos_recinto",
+        }
+    },
+    {
+        "$project": {
+            "_id": 0,
+            "recinto": "$nombre",
+            "ciudad": 1,
+            "distancia_km": {
+                "$round": [{"$divide": ["$distancia_metros", 1000]}, 2]
+            },
+            "eventos": {"$size": "$eventos_recinto"},
+        }
+    },
+    {"$sort": {"distancia_km": 1, "recinto": 1}},
 ]
 
 # ── C6 · Cartel completo de los eventos con varios artistas ─────────────────
