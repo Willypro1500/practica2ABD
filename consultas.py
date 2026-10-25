@@ -30,6 +30,23 @@ otra fecha), así que para contar eventos hay que usar `_id`.
 # de nombres, ORDENADA). Ordenado por n descendente y, a igualdad, por genero.
 C1 = [
     # TODO
+    {"$unwind": "$generos"},
+    {
+        "$group": {
+            "_id": "$generos",
+            "n": {"$sum": 1},
+            "artistas": {"$push": "$nombre"},
+        }
+    },
+    {
+        "$project": {
+            "_id": 0,
+            "genero": "$_id",
+            "n": 1,
+            "artistas": {"$sortArray": {"input": "$artistas", "sortBy": 1}},
+        }
+    },
+    {"$sort": {"n": -1, "genero": 1}},
 ]
 
 # ── C2 · Ocupación media por recinto ────────────────────────────────────────
@@ -39,6 +56,46 @@ C1 = [
 # ocupacion_media descendente y, a igualdad, por recinto.
 C2 = [
     # TODO
+    {
+        "$lookup": {
+            "from": "recinto",
+            "localField": "recinto",
+            "foreignField": "nombre",
+            "as": "info_recinto",
+        }
+    },
+    {
+        "$set": {
+            "datos_recinto": {"$arrayElemAt": ["$info_recinto", 0]},
+        }
+    },
+    {
+        "$project": {
+            "recinto": 1,
+            "ocupacion": {
+                "$multiply": [
+                    {"$divide": ["$entradas_vendidas", "$datos_recinto.aforo"]},
+                    100,
+                ]
+            },
+        }
+    },
+    {
+        "$group": {
+            "_id": "$recinto",
+            "eventos": {"$sum": 1},
+            "media_ocupacion": {"$avg": "$ocupacion"},
+        }
+    },
+    {
+        "$project": {
+            "_id": 0,
+            "recinto": "$_id",
+            "eventos": 1,
+            "ocupacion_media": {"$round": ["$media_ocupacion", 1]},
+        }
+    },
+    {"$sort": {"ocupacion_media": -1, "recinto": 1}},
 ]
 
 # ── C3 · Ingresos por mes ───────────────────────────────────────────────────
